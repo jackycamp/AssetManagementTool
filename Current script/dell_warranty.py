@@ -6,13 +6,13 @@ import re
 import csv
 
 
-#SAIT's current API key as of March 2019. Available to us until March 2020
-APIKEY = '5c1ec485-e481-4e63-8838-2d55f6101b18'
+#Specify your API key (note, this is not an actual key)
+APIKEY = '854u5jf993hn50320'
 
 
 #querys dell's endpoint using the api key
 def get_warr_from_dell(URL, service_tags_list, output_file):
-    #res = requests.get('https://api.dell.com/support/assetinfo/v4/getassetwarranty/35TTP22,F3S9732,1HJ31Q2?apikey=5c1ec485-e481-4e63-8838-2d55f6101b18')
+    #uses python's request library to build a url and retrieve the information
     dell_response = requests.get(URL)
 
     #converts the dell xml response into json data
@@ -62,6 +62,7 @@ def build_endpoint_url(service_tags):
 #warranty information into a csv file
 if __name__ == '__main__':
 
+    #allows the user to specify the input file of service tags to use for this query as well as the output file with all of the data
     input_file = sys.argv[1]
     output_file = sys.argv[2]
 
@@ -82,11 +83,11 @@ if __name__ == '__main__':
     for x in range(0, len(computer_information_list)):
         svc_tags_from_file.append(computer_information_list[x][1])
 
-    #splits the service tags into three groups (sub-lists)
+    #splits the service tags into three groups (sub-lists) to perform 3 separate queries
     service_tags_group_1, service_tags_group_2, service_tags_group_3 = split_input(svc_tags_from_file)
 
     list_grouping = []
-    #building a list of all of the lists of service tags
+    #building a list of all of the lists of service tags, yes a list of lists..
     list_grouping.append(service_tags_group_1)
     list_grouping.append(service_tags_group_2)
     list_grouping.append(service_tags_group_3)
